@@ -1,5 +1,6 @@
 package br.whoslv.vanillapulse;
 
+import br.whoslv.vanillapulse.event.listener.BlockBreakListener;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.resources.Identifier;
@@ -22,6 +23,7 @@ public class VanillaPulse implements ModInitializer {
 		// Proceed with mild caution.
 
 		LOGGER.info("Hello Fabric world!");
+		BlockBreakListener.register();
 	}
 
 	public static Identifier id(String path) {
