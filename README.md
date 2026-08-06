@@ -140,11 +140,11 @@ VanillaPulse/
 
 ## v0.1 — Foundation
 
-* [ ] Project setup
-* [ ] Hello World
-* [ ] Fabric initialization
-* [ ] Logging system
-* [ ] Basic project structure
+* [x] Project setup
+* [x] Hello World
+* [x] Fabric initialization
+* [x] Logging system
+* [x] Basic project structure
 
 ---
 
