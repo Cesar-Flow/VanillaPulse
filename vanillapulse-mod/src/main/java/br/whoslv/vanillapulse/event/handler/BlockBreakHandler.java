@@ -1,20 +1,29 @@
 package br.whoslv.vanillapulse.event.handler;
 
+import br.whoslv.vanillapulse.VanillaPulse;
 import br.whoslv.vanillapulse.statistic.StatisticService;
+import br.whoslv.vanillapulse.statistic.StatisticType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.state.BlockState;
 
 public class BlockBreakHandler {
-    private final StatisticService statisticService;
+    public void handle(Player player) { handle(player, 1); }
 
-    public BlockBreakHandler() {
-        this.statisticService = new StatisticService();
+    public static void handle(Player player, int amount) {
+        StatisticService statisticService = new StatisticService();
 
-    }
+        statisticService.addStatistic(
+                player,
+                StatisticType.BLOCK_BROKEN,
+                amount
+        );
 
-    public void handle(Player player, BlockState block) {
-        String blockName = block.getBlock().getName().toString();
+        VanillaPulse.LOGGER.info(
+                String.format(
+                        "%s quebrou %d bloco(s)",
+                        player.getName().getString(),
+                        statisticService.countStatistic(player, StatisticType.BLOCK_BROKEN)
+                )
+        );
 
-        statisticService.addBlockBroken(player, blockName);
     }
 }
