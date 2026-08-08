@@ -9,9 +9,10 @@ import java.util.Map;
 import java.util.UUID;
 
 public class DistanceService {
-    public Map<UUID, Map<ServerPlayer, Double>> getDistanceByKM() {
+    final Map<UUID, Double> playersDistance = new HashMap<>();
+
+    public void addDistanceByKM() {
         final Map<UUID, ServerPlayer> playersList = (new PlayerRegistry()).getAllPlayers();
-        final Map<UUID, Map<ServerPlayer, Double>> playersDistance = new HashMap<>();
 
         for (ServerPlayer player : playersList.values()) {
             int walk = player.getStats()
@@ -19,10 +20,12 @@ public class DistanceService {
 
             double km = walk / 100000.0;
 
-            playersDistance.computeIfAbsent(player.getUUID(), k -> new HashMap<>())
-                    .put(player, km);
+            playersDistance.merge(player.getUUID(), km, Double::sum);
         }
+    }
 
+    public Map<UUID, Double> getDistanceByKM() {
+        addDistanceByKM();
         return playersDistance;
     }
 }

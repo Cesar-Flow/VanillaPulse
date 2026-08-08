@@ -24,4 +24,17 @@ public class StatisticService {
                 .getOrDefault(player.getUUID(), Map.of())
                 .getOrDefault(type, 0);
     }
+
+    public void loadStatistics(Map<UUID, Map<StatisticType, Integer>> loadedStatistics) {
+        statistics.clear();
+        statistics.putAll(loadedStatistics);
+    }
+
+    public Map<StatisticType, Integer> getStatistics(UUID uuid) {
+        return statistics.getOrDefault(uuid, new HashMap<>());
+    }
+
+    public void clearStatistics(UUID uuid) {
+        statistics.remove(uuid);
+    }
 }

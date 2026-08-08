@@ -5,10 +5,12 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.server.level.ServerPlayer;
 
 public class PlayerJoin {
-    ServerPlayConnectionEvents.Join event = (handler, sender, server) -> {
-        ServerPlayer player = handler.player;
+    public static void register() {
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+            ServerPlayer player = handler.player;
+            PlayerRegistry playerRegistry = new PlayerRegistry();
 
-        PlayerRegistry playerRegistry = new PlayerRegistry();
-        playerRegistry.register(player);
-    };
+            playerRegistry.register(player);
+        });
+    }
 }

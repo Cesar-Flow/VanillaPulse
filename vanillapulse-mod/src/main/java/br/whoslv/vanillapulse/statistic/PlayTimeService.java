@@ -7,20 +7,23 @@ import net.minecraft.stats.Stats;
 import java.util.*;
 
 public class PlayTimeService {
-    public Map<UUID, Map<ServerPlayer, Long>> getPlayTimeByHour() {
+    final Map<UUID, Integer> playersPlayTime = new HashMap<>();
+
+    public void addPlayTimeByHour() {
         final Map<UUID, ServerPlayer> playersList = (new PlayerRegistry()).getAllPlayers();
-        final Map<UUID, Map<ServerPlayer, Long>> playersPlayTime = new HashMap<>();
 
         for (ServerPlayer player : playersList.values()) {
             int ticks = player.getStats()
                     .getValue(Stats.CUSTOM.get(Stats.PLAY_TIME));
 
-            long horas = (ticks / 20L) / 60 / 60;
+            int horas = (ticks / 20) / 60 / 60;
 
-            playersPlayTime.computeIfAbsent(player.getUUID(), k -> new HashMap<>())
-                    .put(player, horas);
+            playersPlayTime.merge(player.getUUID(), horas, Integer::sum);
         }
+    }
 
+    public Map<UUID, Integer> getPlayTimeByHour() {
+        addPlayTimeByHour();
         return playersPlayTime;
     }
 }

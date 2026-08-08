@@ -1,0 +1,6 @@
+__pycache__/
+alembic.ini
+banco.db
+discord-bot/
+main.py
+migrations/
